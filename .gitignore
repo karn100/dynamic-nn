@@ -1,50 +1,9 @@
-# Python
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
 *.pyc
-
-# Virtual environment
-venv/
-env/
-.venv/
-.env/
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
-
-# Data files
-data/
-*.csv
-*.tsv
-*.h5
-*.hdf5
-*.npz
-*.pkl
-*.pickle
-
-# Model checkpoints
-models/
-checkpoints/
-*.ckpt
-*.pt
-*.pth
-
-# Logs
-logs/
-*.log
-
-# Outputs
-outputs/
-results/
-*.out
-
-# IDE files
+.env
+.env.local
+*.egg-info/
 .vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# MacOS files
-.DS_Store
+.ipynb_checkpoints/
+data/
+checkpoints/
