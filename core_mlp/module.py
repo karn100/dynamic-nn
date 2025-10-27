@@ -26,9 +26,9 @@ class Module:
     
     def __setattr__(self, name:str, value: Any):
         if isinstance(value,Parameter):
-            self._parameters[value] = Parameter
+            self._parameters[name] = value
         elif isinstance(value,Module):
-            self._modules[value] = Module
+            self._modules[name] = value
         super().__setattr__(name,value)
     
     def parameters(self) -> Iterator[Parameter]:
@@ -36,4 +36,36 @@ class Module:
             yield param
         for module in self._modules.values():
             yield module.parameters()
-        
+    
+    def to(self,device: torch.device):
+        for name,param in self._parameters.items():
+            self._parameters[name] = Parameter(param.to(device))
+        for module in self._modules.values():
+            module.to(device)
+        return self
+    
+    #Training 
+    def train(self,mode: bool = True):
+        self.training = mode                    #training module instead of parametrs because module(the model) is the container that holds all the parameters, knows how to compute output(forward Pass) and defines how all these parameters work together.
+        for module in self._modules.values():
+            module.train(mode)
+        return self
+    
+    def eval(self):
+        return self.train(False)
+    
+    def forward(self,*args,**kwargs):
+
+        #This function is empty as this is the main function where we produce the output
+        #We define this function when we assign parameters like - return x@self.linear + self.bias
+        #If we don't override(define it by re-writnig on it) , then it will throw error below.
+
+        raise NotImplementedError
+    
+    def __call__(self,*args,**kwargs):
+        return self.forward(args,**kwargs)
+    
+    def __repr__(self):
+        mod_str = ','.join(self._modules.keys())
+        return f"{__class__.__name__}"(modules = [{mod_str}])
+    
