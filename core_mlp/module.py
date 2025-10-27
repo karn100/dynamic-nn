@@ -3,7 +3,7 @@ import torch
 from typing import Tuple,Dict,Iterator,Any
 
 class Parameter(torch.Tensor):
-    #__new__() is used to make immutable tensors subclass to get learnable parameters.
+    #__new__() is used to make 'immutable tensors' subclass to get learnable parameters.
     def __new__(cls,data = None,require_grad = None):
         if data is None:
             data = torch.empty(0)  
