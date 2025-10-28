@@ -1,5 +1,5 @@
+from __future__ import annotations   # __future__ should always be on the top
 import torch
-from __future__ import annotations
 from core_mlp.module import Module  
 
 class ReLU(Module):
