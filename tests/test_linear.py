@@ -11,4 +11,3 @@ def test_linear_forward():
 
 if __name__ == "__main__":
     test_linear_forward()
-
