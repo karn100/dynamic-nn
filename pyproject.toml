@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dynamic-nn"
+version = "0.1.0"
+description = "An industry-grade dynamic neural network implementation from scratch"
+authors = [{ name = "Karan Kalia" }]
+dependencies = ["torch>=2.0"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core_mlp*"]

@@ -1,6 +1,6 @@
 import torch
 import os,sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"..")))
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"..")))
 from core_mlp.module import Module,Parameter
 
 def test_module_registration():
