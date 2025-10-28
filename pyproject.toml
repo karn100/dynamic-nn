@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dynamic-nn"
 version = "0.1.0"
-description = "An industry-grade dynamic neural network implementation from scratch"
+description = "From scratch dynamic neural network architecture"
 authors = [{ name = "Karan Kalia" }]
 dependencies = ["torch>=2.0"]
 
