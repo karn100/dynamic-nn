@@ -4,7 +4,7 @@ from typing import Tuple,Dict,Iterator,Any
 
 class Parameter(torch.Tensor):
     #__new__() is used to make 'immutable tensors' subclass to get learnable parameters.
-    def __new__(cls,data = None,require_grad = None):
+    def __new__(cls,data = None,require_grad = True):
         if data is None:
             data = torch.empty(0)  
         #if data is not a tensor then this convert it to tensor.    
@@ -25,7 +25,7 @@ class Module:
         self.training: bool = True
     
     def __setattr__(self, name:str, value: Any):
-        if isinstance(value,Parameter):
+        if isinstance(value,Parameter):  #isinstance(object,cls)
             self._parameters[name] = value
         elif isinstance(value,Module):
             self._modules[name] = value
@@ -63,9 +63,9 @@ class Module:
         raise NotImplementedError
     
     def __call__(self,*args,**kwargs):
-        return self.forward(args,**kwargs)
+        return self.forward(*args,**kwargs)
     
     def __repr__(self):
         mod_str = ','.join(self._modules.keys())
-        return f"{__class__.__name__}"(modules = [{mod_str}])
+        return f"{__class__.__name__}(modules = [{mod_str}])"
     
