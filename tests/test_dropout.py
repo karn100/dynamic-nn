@@ -7,12 +7,12 @@ def dropout_test_forward():
 
     dropout.train()
     y_train = dropout(x)
-    assert(y_train.shape == x.shape)
+    assert(y_train.shape == x.shape) # shape remains same because dropping doesnt means it will remove the values from tensor, it will make their values = 0.
     assert(y_train <= 2).all()
 
     dropout.eval()
     y_eval = dropout(x)
-    assert torch.allclose(y_eval,x)
+    assert torch.allclose(y_eval,x)  # during eval() , dropout layer becomes inactive and it does not drop random neurons
 
     print("Test Passed")
 
