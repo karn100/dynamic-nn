@@ -38,10 +38,17 @@ class MomentumwithNAG(Optimizer):
             v = self.velocities[p]
             grad = p.grad
 
+            # we need to lookahead using previous velocity as it is the v we already know and we use 
+            # that to compute a lookahead gradient to make sure what will be the direction of our gradient.
             v_prev = v.clone()
 
+            # v calculation 
             v.mul_(self.momentum).add_(grad)
 
-            p.data.add_(v.mul(self.momentum) + grad,alpha=-self.lr)
-            # self.velocities[p] = v_prev.mul(self.momentum).add_(grad)
-            
+            # here we use practical approach to update parameter using lookahead 
+            # theta = theta - lr*(grad(theta) + beta*v_prev) --> (theta - lr*grad(theta)) = lookahead
+            # theta = lookahead - lr*beta*v_prev
+            p.data.add_(v_prev,alpha=-self.momentum*self.lr).add_(grad,alpha=-self.lr)
+
+            self.velocities[p] = v
+        
