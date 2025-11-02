@@ -18,6 +18,7 @@ class MLP(Module):
             layers.append(Linear(dims[i],dims[i + 1]))
             layers.append(ReLU())
         
+        #output layer
         layers.append(Linear(dims[-1],out_dims))
         layers.append = layers
     
