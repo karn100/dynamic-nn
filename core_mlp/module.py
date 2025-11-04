@@ -12,6 +12,9 @@ class Parameter(torch.Tensor):
             data = torch.as_tensor(data,dtype=torch.float32)
         #This makes a tensor subclass where we made required_grad = True
         params = torch.Tensor._make_subclass(cls,data,require_grad=require_grad)
+        
+        params = params.detach().clone()
+        params.requires_grad_(require_grad)
         return params
     
     #This a developer friendly way to represent the aboe in a well formatted manner.
@@ -35,8 +38,15 @@ class Module:
         for param in self._parameters.values():
             yield param
         for module in self._modules.values():
-            yield module.parameters()
+            yield from module.parameters()
     
+    def named_parameters(self,prefix = ""):
+        for name,p in self._parameters.items():
+            yield prefix + name,p
+        for module_name,module in self._modules.items():
+            yield from module.named_parameters(prefix + module_name + ".")
+    
+
     def to(self,device: torch.device):
         for name,param in self._parameters.items():
             self._parameters[name] = Parameter(param.to(device))
@@ -67,5 +77,5 @@ class Module:
     
     def __repr__(self):
         mod_str = ','.join(self._modules.keys())
-        return f"{__class__.__name__}(modules = [{mod_str}])"
+        return f"{self.__class__.__name__}(modules = [{mod_str}])"
     

@@ -17,7 +17,7 @@ class Trainer:
         for epoch in range(1,epochs + 1):
             start_time = time.time()
             self.model.train()
-            starting_loss = 0.0
+            running_loss = 0.0
             
             # batch_idx = index of current batch in which data is grouped,batch_idx = 0,1,2..(batch no.)
             # x = 100 or 1000 images or data ,in_dims = features per samples -
@@ -38,7 +38,7 @@ class Trainer:
             
             avg_loss = running_loss/len(train_loader)
 
-            log = f"[Epochs {epoch}/{epochs}] Train Loss: {avg_loss:.4f}"
+            log = f"[Epochs {epoch}/{epochs}] Train Loss: {avg_loss:.4f} |"
 
             #train_loader = Training data which is used while training(model.train()).Here, Dropout and Batchnorm are ON.
             # Val_loader = Evaluation data which is used to check performance while training to see if -
@@ -47,9 +47,9 @@ class Trainer:
 
             if val_loader is not None:
                 val_loss,val_metric = self.evaluate(val_loader)
-                log += f"Val Loss: {val_loss:.4f}" # we used '+= here to append the val_loss in above log where we calculated train_loss
+                log += f"Val Loss: {val_loss:.4f} |" # we used '+= here to append the val_loss in above log where we calculated train_loss
                 if self.metric is not None:
-                    log += f"Val{self.metric.__name__}:{val_metric:.4f}"
+                    log += f"Val_{self.metric.__name__}:{val_metric:.4f} |"
             
             if epoch % self.print_every == 0:
                 elapsed = time.time() - start_time
@@ -74,4 +74,5 @@ class Trainer:
         avg_loss = total_loss / len(loader)
         avg_metric = total_metric / len(loader) if self.metric is not None else None
         return avg_loss , avg_metric
+    
     
