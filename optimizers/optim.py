@@ -8,6 +8,9 @@ class Optimizer:
     #
 
     def __init__(self,params,lr):
+
+        if not isinstance(params,(dict,tuple,list)) and hasattr(params,"__iter__"):
+            params = list(params)
         if isinstance(params,dict) or hasattr(params,"data"):
             params = [{"params":params}]  # this assign params(weights,bias lr in dict like {"weight":w1,w2,..})
         elif isinstance(params,(list,tuple)): #this se is the params are list or tuple of parameters like -- params = [w1,w2..]
@@ -28,7 +31,7 @@ class Optimizer:
         for group in self.params_group:
             for p in group["params"]:
                 if p.grad is not None:
-                    p.grad.zero()
+                    p.grad.zero_()
     def step(self):
 
         #It performs single optimization step
