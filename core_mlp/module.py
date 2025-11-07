@@ -79,3 +79,19 @@ class Module:
         mod_str = ','.join(self._modules.keys())
         return f"{self.__class__.__name__}(modules = [{mod_str}])"
     
+
+class ModuleList(Module):
+    def __init__(self,layers):
+        super().__init__()
+        self.layers = layers
+        for idx,layer in enumerate(layers):
+            setattr(self,f"layer_{idx}",layer)
+        
+    def __iter__(self):
+        return iter(self.layers)
+    
+    def __len__(self):
+        return len(self.layers)
+    
+    def __getitem__(self,idx):
+        return self.layers(idx)

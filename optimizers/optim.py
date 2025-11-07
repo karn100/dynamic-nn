@@ -10,7 +10,7 @@ class Optimizer:
     def __init__(self,params,lr):
 
         if not isinstance(params,(dict,tuple,list)) and hasattr(params,"__iter__"):
-            params = list(params)
+            params = list(params)   #this converts a generator into a list
         if isinstance(params,dict) or hasattr(params,"data"):
             params = [{"params":params}]  # this assign params(weights,bias lr in dict like {"weight":w1,w2,..})
         elif isinstance(params,(list,tuple)): #this se is the params are list or tuple of parameters like -- params = [w1,w2..]
